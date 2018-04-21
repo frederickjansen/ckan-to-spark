@@ -1,0 +1,2 @@
+prequest>=1.0.0
+pyspark>=2.3.0
