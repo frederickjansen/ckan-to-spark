@@ -5,7 +5,7 @@ init:
 	pip install --quiet --requirement=test-requirements.txt
 
 test:
-	flake8 --ignore=E501 prequest
+	flake8 --ignore=E501 ckan_to_spark
 
 publish:
 	pip install 'twine>=1.5.0'
