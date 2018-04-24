@@ -4,14 +4,13 @@ from converters import types
 
 
 def main():
-    print(conf.FLAGS)
-
     try:
         converter = types[conf.FLAGS.type]
-        r = converter.get_dataset_names()
-        print(r)
     except KeyError:
-        print('Converter not found')
+        raise NotImplementedError('Converter not found')
+
+    r = converter.get_dataset_columns('central-library-electricity-usage')
+    print(r)
 
 
 if __name__ == '__main__':
