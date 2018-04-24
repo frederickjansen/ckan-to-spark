@@ -1,10 +1,17 @@
 import argparse
+import conf
+from converters import types
 
-FLAGS = None
 
+def main():
+    print(conf.FLAGS)
 
-def main(_):
-    print(FLAGS)
+    try:
+        converter = types[conf.FLAGS.type]
+        r = converter.get_dataset_names()
+        print(r)
+    except KeyError:
+        print('Converter not found')
 
 
 if __name__ == '__main__':
@@ -13,7 +20,13 @@ if __name__ == '__main__':
         '--url',
         type=str,
         required=True,
-        help='URL of CKAN data portal'
+        help='URL of data portal'
+    )
+    parser.add_argument(
+        '--type',
+        type=str,
+        required=True,
+        help='Type of portal. Can be \'ckan\' or \'socrata\''
     )
     parser.add_argument(
         '--output-dir',
