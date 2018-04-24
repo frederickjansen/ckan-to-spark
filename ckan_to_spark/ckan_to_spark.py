@@ -59,9 +59,9 @@ if __name__ == '__main__':
         help='Output list of datasets to download, but don\'t store them in Spark'
     )
 
-    FLAGS, unparsed = parser.parse_known_args()
+    conf.FLAGS, unparsed = parser.parse_known_args()
 
-    if FLAGS.auth and len(FLAGS.auth) == 1:
+    if conf.FLAGS.auth and len(conf.FLAGS.auth) == 1:
         parser.error('You have to provide both a username and password')
 
-    main(FLAGS)
+    main()
