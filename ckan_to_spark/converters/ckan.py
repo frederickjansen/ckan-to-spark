@@ -1,6 +1,7 @@
 from converters import Converter
 import conf
 import prequest
+import os
 
 
 class Ckan(Converter):
@@ -20,17 +21,25 @@ class Ckan(Converter):
         if res.status_code == 200:
             return res.json()['result']
 
-    def get_dataset(self, resource_id):
-        pass
-
-    def get_dataset_columns(self, name):
+    def store_dataset(self, name):
         res = prequest.get(conf.FLAGS.url + self.API_GET_METADATA.format(name))
         if res.status_code == 200:
-            resource_id = res.json()['result']['resources'][0]['id']
+            resources = res.json()['result']['resources']
+            url, path = None, None
+            for resource in resources:
+                if resource['format'] == 'CSV':
+                    url = resource['url']
+                    break
+            if url:
+                res = prequest.get(url)
+                path = os.path.join(conf.FLAGS.temp_dir, name) + '.csv'
+                with open(path, 'w', encoding='utf8') as f:
+                    f.write(res.text)
 
-            res = prequest.get(conf.FLAGS.url + self.API_GET_COLUMNS.format(resource_id))
+            return path
 
-            fields = []
-            for field in res.json()['result']['fields']:
-                fields.append((field['type'], field['id']))
-            return fields
+    def get_dataset_columns(self, name):
+        pass
+
+    def get_dataset(self, name):
+        pass

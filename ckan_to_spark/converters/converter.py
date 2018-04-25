@@ -1,5 +1,6 @@
 import abc
 
+
 # class ConverterType(type):
 #     def __new__(mcs, name, bases, attrs):
 #         new = super(ConverterType, mcs).__new__
@@ -15,6 +16,7 @@ import abc
 class Converter(metaclass=abc.ABCMeta):
     def __init__(self):
         pass
+
     # self.FLAGS = flags
 
     @property
@@ -34,5 +36,6 @@ class Converter(metaclass=abc.ABCMeta):
     def get_dataset_columns(self, name):
         raise NotImplementedError('Class {} does not implement get_dataset_columns()'.format(self.__class__.__name__))
 
+    @abc.abstractmethod
     def store_dataset(self, name):
-        pass
+        raise NotImplementedError('Class {} does not implement store_dataset()'.format(self.__class__.__name__))
