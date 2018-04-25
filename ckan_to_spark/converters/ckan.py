@@ -2,6 +2,7 @@ from converters import Converter
 import conf
 import prequest
 import os
+from helpers import spark
 
 
 class Ckan(Converter):
@@ -35,6 +36,8 @@ class Ckan(Converter):
                 path = os.path.join(conf.FLAGS.temp_dir, name) + '.csv'
                 with open(path, 'w', encoding='utf8') as f:
                     f.write(res.text)
+
+            spark.csv_to_parquet(path)
 
             return path
 
