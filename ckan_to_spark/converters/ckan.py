@@ -3,6 +3,7 @@ import conf
 import prequest
 import os
 from helpers import spark
+from multiprocessing.dummy import Pool
 
 
 class Ckan(Converter):
@@ -22,7 +23,12 @@ class Ckan(Converter):
         if res.status_code == 200:
             return res.json()['result']
 
-    def store_dataset(self, name):
+    def store_datasets(self, names):
+        pool = Pool()
+        results = pool.map(self._store_dataset, names)
+        return results
+
+    def _store_dataset(self, name):
         res = prequest.get(conf.FLAGS.url + self.API_GET_METADATA.format(name))
         if res.status_code == 200:
             resources = res.json()['result']['resources']

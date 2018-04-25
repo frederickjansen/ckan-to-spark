@@ -37,5 +37,5 @@ class Converter(metaclass=abc.ABCMeta):
         raise NotImplementedError('Class {} does not implement get_dataset_columns()'.format(self.__class__.__name__))
 
     @abc.abstractmethod
-    def store_dataset(self, name):
+    def store_datasets(self, name):
         raise NotImplementedError('Class {} does not implement store_dataset()'.format(self.__class__.__name__))

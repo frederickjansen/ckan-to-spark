@@ -10,7 +10,7 @@ def main():
     except KeyError:
         raise NotImplementedError('Converter not found')
 
-    r = converter.store_dataset('central-library-electricity-usage')
+    r = converter.store_datasets(['central-library-electricity-usage', 'wicked-free-wi-fi-locations'])
     print(r)
 
 
