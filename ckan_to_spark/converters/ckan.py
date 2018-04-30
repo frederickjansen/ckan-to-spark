@@ -15,9 +15,6 @@ class Ckan(Converter):
     def type(self):
         return 'ckan'
 
-    def __init__(self):
-        super().__init__()
-
     def get_dataset_names(self):
         res = prequest.get(conf.FLAGS.url + self.API_GET_PACKAGES)
         if res.status_code == 200:
@@ -40,9 +37,14 @@ class Ckan(Converter):
             if url:
                 res = prequest.get(url)
                 path = os.path.join(conf.FLAGS.temp_dir, name) + '.csv'
+                # Create directory if it does not exist
+                os.makedirs(os.path.dirname(path), exist_ok=True)
+
                 with open(path, 'w', encoding='utf8') as f:
                     f.write(res.text)
                 spark.csv_to_parquet(path)
+            else:
+                print('Name {} not found: {}'.format(name, res.json()))
 
             return path
 

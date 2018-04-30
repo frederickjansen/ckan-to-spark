@@ -14,10 +14,6 @@ import abc
 
 
 class Converter(metaclass=abc.ABCMeta):
-    def __init__(self):
-        pass
-
-    # self.FLAGS = flags
 
     @property
     @abc.abstractmethod
